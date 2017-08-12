@@ -2,4 +2,9 @@
     <string name="app_name">StepByStep</string>
     <string name="current_day">TODAY</string>
     <string name="steps_solidpart">STEPS</string>
+    <string name="distance">Distance</string>
+    <string name="distance_value">0,000 km</string>
+    <string name="calories">Calories</string>
+    <string name="tempo">Tempo</string>
+    <string name="tempoValue">0km/h</string>
 </resources>

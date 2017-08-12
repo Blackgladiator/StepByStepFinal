@@ -1,28 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="1">
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/current_day"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
         android:textSize="25dp"
-        android:textStyle="normal"/>
+        android:textStyle="normal"
+        android:id="@+id/currentDay" />
 
 
     <TextView
         android:id="@+id/steps_solid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
         android:text="@string/steps_solidpart"
-        android:layout_marginTop="15dp"
         android:textSize="25dp"
         android:textStyle="bold"
+        android:layout_below="@id/currentDay"/>
+
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/distanceIcon"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="20dp"
+        android:layout_gravity="left"
+        android:src="@drawable/distance" />
+    <TextView
+        android:id="@+id/distanceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/distance"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/distanceIcon"
         />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/distanceValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
+        android:layout_below="@id/distanceText"
+        android:text="@string/distance_value"
+
+        />
+
+    <ImageView
+        android:id="@+id/tempoIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+
+        android:src="@drawable/tempo"
+        android:layout_marginTop="150dp"
+
+     />
+    <TextView
+        android:id="@+id/tempo"
+        android:text="@string/tempo"
+        android:layout_below="@+id/tempoIcon"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+
+
+    <ImageView
+        android:id="@+id/caloriesIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:layout_toRightOf="@+id/tempoIcon"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="120dp"
+        android:src="@drawable/calories"/>
+
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/caloriesText"
+        android:layout_below="@+id/caloriesIcon"
+        android:text="@string/calories"
+        android:layout_toRightOf="@+id/tempo"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="900dp"
+
+        />
+
+
+</RelativeLayout>
