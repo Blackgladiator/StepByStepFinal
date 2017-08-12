@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">StepByStep</string>
+    <string name="current_day">TODAY</string>
+    <string name="steps_solidpart">STEPS</string>
 </resources>
