@@ -7,4 +7,5 @@
     <string name="calories">Calories</string>
     <string name="tempo">Tempo</string>
     <string name="tempoValue">0km/h</string>
+    <string name="caloriesValue">0 kcal</string>
 </resources>
