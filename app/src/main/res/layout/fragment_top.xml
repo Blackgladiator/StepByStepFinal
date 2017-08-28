@@ -93,11 +93,10 @@
         android:id="@+id/caloriesIcon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_toRightOf="@+id/tempoIcon"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="120dp"
-        android:src="@mipmap/calories"/>
+        android:src="@mipmap/calories"
+        android:layout_alignTop="@+id/tempoIcon"
+        android:layout_alignRight="@+id/caloriesText"
+        android:layout_alignEnd="@+id/caloriesText" />
 
 
 
