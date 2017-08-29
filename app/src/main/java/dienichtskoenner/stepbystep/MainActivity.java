@@ -29,4 +29,6 @@ public class MainActivity extends AppCompatActivity {
                 .replace(R.id.layoutBottom,fragmentBottom,fragmentTop.getTag())
                 .commit();
     }
+    //Test
 }
+
