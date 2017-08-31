@@ -9,8 +9,6 @@
     android:weightSum="100"
     android:background="#FFFFFF">
 
-
-
     <LinearLayout
         android:id="@+id/layoutTop"
         android:orientation="horizontal"
