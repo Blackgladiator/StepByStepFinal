@@ -44,10 +44,10 @@ public class FragmentBottomNoInternet extends Fragment implements View.OnClickLi
         refreshText.setOnClickListener(this);
 
         if(FragmentBottom.noGPS){
-            noInternetGPS.setText("No GPS detected");
+            noInternetGPS.setText(R.string.activate_gps);
             FragmentBottom.noGPS=false;
         } else{
-            noInternetGPS.setText("No Internet detected");
+            noInternetGPS.setText(R.string.activate_internet);
             FragmentBottom.noGPS=false;
         }
     }

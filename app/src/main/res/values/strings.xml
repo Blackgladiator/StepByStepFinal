@@ -12,7 +12,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="activate_internet_gps"></string>
     <string name="refresh">REFRESH</string>
-    <string name="activate_gps">GPS singal not found. Please check your device settings</string>
+    <string name="activate_gps_dialog">GPS singal not found. Please check your device settings</string>
     <string name="okay">OK</string>
     <string name="disable">DISABLE</string>
+    <string name="activate_gps">No GPS detected</string>
+    <string name="activate_internet">No Internet detected</string>
 </resources>
