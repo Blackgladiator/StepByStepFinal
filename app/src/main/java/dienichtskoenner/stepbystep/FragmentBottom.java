@@ -158,7 +158,7 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
     private void buildAlertMessageNoGps() {
 
         if(isNetworkAvailable()){
-            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),R.style.AlertTheme);
             builder.setMessage(R.string.activate_gps)
                     .setCancelable(false)
                     .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
