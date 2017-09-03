@@ -38,6 +38,8 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
     private static final float ZOOM_LOCATION=15;
     private static final int TILT_LOCATION=0;
 
+    public static boolean noGPS;
+
     private SupportMapFragment mapFragment;
     private GoogleMap mMap;
     private Location location;
@@ -170,6 +172,10 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
                     })
                     .setNegativeButton(R.string.disable, new DialogInterface.OnClickListener() {
                         public void onClick(final DialogInterface dialog, final int id) {
+
+                            noGPS=true;
+                            getFragmentManager().beginTransaction().remove(FragmentBottom.this).commit();
+                            getFragmentManager().beginTransaction().replace(R.id.layoutBottomNoInternet, new FragmentBottomNoInternet()).commit();
 
                             dialog.cancel();
                         }
