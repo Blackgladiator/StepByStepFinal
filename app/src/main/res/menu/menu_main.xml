@@ -7,22 +7,15 @@
     <item
         android:id="@+id/action_bar_chart"
         android:icon="@drawable/chart"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         android:title="Chart"
-        app:showAsAction="always"></item>
+        app:showAsAction="never"></item>
 
     <item
         android:id="@+id/action_bar_location"
         android:icon="@drawable/location"
-        android:orderInCategory="100"
+        android:orderInCategory="2"
         android:title="Location"
-        app:showAsAction="always"></item>
-
-    <item
-        android:id="@+id/action_bar_folder"
-        android:icon="@drawable/menu"
-        android:orderInCategory="100"
-        android:title="Information"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="never"></item>
 
 </menu>
