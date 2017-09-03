@@ -39,13 +39,14 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
     private static final int TILT_LOCATION=0;
 
     public static boolean noGPS;
+    public static boolean isLocationPermissionGranted;
 
     private SupportMapFragment mapFragment;
     private GoogleMap mMap;
     private Location location;
     private LocationManager locationManager;
 
-    private boolean isLocationPermissionGranted;
+
     private boolean isOnResume;
     private double latti,longi;
 
@@ -64,6 +65,10 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(!isNetworkAvailable()){
+            errorMessageNoInternetNoGPS();
+        }
 
         prepareMap();
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -174,8 +179,7 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
                         public void onClick(final DialogInterface dialog, final int id) {
 
                             noGPS=true;
-                            getFragmentManager().beginTransaction().remove(FragmentBottom.this).commit();
-                            getFragmentManager().beginTransaction().replace(R.id.layoutBottomNoInternet, new FragmentBottomNoInternet()).commit();
+                            errorMessageNoInternetNoGPS();
 
                             dialog.cancel();
                         }
@@ -183,8 +187,12 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
             final AlertDialog alert = builder.create();
             alert.show();
         }else {
-            getFragmentManager().beginTransaction().remove(FragmentBottom.this).commit();
-            getFragmentManager().beginTransaction().replace(R.id.layoutBottomNoInternet, new FragmentBottomNoInternet()).commit();
+          errorMessageNoInternetNoGPS();
         }
+    }
+
+    private void errorMessageNoInternetNoGPS(){
+        getFragmentManager().beginTransaction().remove(FragmentBottom.this).commit();
+        getFragmentManager().beginTransaction().replace(R.id.layoutBottomNoInternet, new FragmentBottomNoInternet()).commit();
     }
 }

@@ -39,18 +39,17 @@ public class FragmentBottomNoInternet extends Fragment implements View.OnClickLi
         refreshActivityIcon=(ImageView) getView().findViewById(R.id.refreshIcon);
         refreshText=(TextView) getView().findViewById(R.id.refreshText);
         noInternetGPS=(TextView) getView().findViewById(R.id.activiteInternetGPSText);
-        
-        if(FragmentBottom.noGPS){
-            noInternetGPS.setText("No GPS detected");
-            FragmentBottom.noGPS=false;
-        }
-        else{
-            noInternetGPS.setText("No Internet detected");
-            FragmentBottom.noGPS=false;
-        }
 
         refreshActivityIcon.setOnClickListener(this);
         refreshText.setOnClickListener(this);
+
+        if(FragmentBottom.noGPS){
+            noInternetGPS.setText("No GPS detected");
+            FragmentBottom.noGPS=false;
+        } else{
+            noInternetGPS.setText("No Internet detected");
+            FragmentBottom.noGPS=false;
+        }
     }
 
     @Override
