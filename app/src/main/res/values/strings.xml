@@ -10,5 +10,11 @@
     <string name="caloriesValue">0 kcal</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="activate_internet_gps"></string>
+    <string name="refresh">REFRESH</string>
+    <string name="activate_gps_dialog">GPS singal not found. Please check your device settings</string>
+    <string name="okay">OK</string>
+    <string name="disable">DISABLE</string>
+    <string name="activate_gps">No GPS detected</string>
+    <string name="activate_internet">No Internet detected</string>
 </resources>
