@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentBottom fragmentBottom=new FragmentBottom();
         manager.beginTransaction()
-                .replace(R.id.layoutBottom,fragmentBottom,fragmentTop.getTag())
+                .replace(R.id.layoutBottom,fragmentBottom,fragmentBottom.getTag())
                 .commit();
 
         FragmentBottomNoInternet fragmentBottomNoInternet=new FragmentBottomNoInternet();
