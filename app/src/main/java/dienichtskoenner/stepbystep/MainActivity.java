@@ -1,5 +1,6 @@
 package dienichtskoenner.stepbystep;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
         if (id == android.R.id.home){
             finish();
         }
+
+        switch (item.getItemId()){
+            case R.id.action_bar_chart:
+                Intent intent = new Intent(MainActivity.this, Chart.class);
+                startActivity(intent);
+                break;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
