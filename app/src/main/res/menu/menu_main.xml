@@ -18,4 +18,11 @@
         android:title="Location"
         app:showAsAction="never"></item>
 
+    <item
+        android:id="@+id/action_bar_geofence"
+        android:icon="@drawable/location"
+        android:orderInCategory="3"
+        android:title="GeoFence-Timer"
+        app:showAsAction="never"></item>
+
 </menu>

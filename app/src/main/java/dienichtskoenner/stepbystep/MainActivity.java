@@ -18,8 +18,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.logo);
+
         initFragments();
     }
 
@@ -41,10 +43,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentGeoFence=new Intent(MainActivity.this, GeoFenceMainActivity.class);
                 startActivity(intentGeoFence);break;
 
-            default:
-                return super.onOptionsItemSelected(item);
+            default:return super.onOptionsItemSelected(item);
         }
-        
+
         return false;
     }
 
