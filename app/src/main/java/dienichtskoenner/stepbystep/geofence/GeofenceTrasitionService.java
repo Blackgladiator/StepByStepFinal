@@ -24,7 +24,6 @@ import dienichtskoenner.stepbystep.R;
 public class GeofenceTrasitionService extends IntentService {
 
     private static final String TAG = GeofenceTrasitionService.class.getSimpleName();
-    private static final String GEOFENCE_NOTIFICATION="You have reached your spot";
     private static final String GEOFENCE_NOT_AVAILABLE="GeoFence not available";
     private static final String GEOFENCES_TO_MANY="To many GeoFences";
     private static final String GEOFENCE_UNKONW_ERROR="Unkown Error";
@@ -49,7 +48,7 @@ public class GeofenceTrasitionService extends IntentService {
 
         int geoFenceTransition = geofencingEvent.getGeofenceTransition();
 
-        if ( geoFenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
+        if (geoFenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ||
                 geoFenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT ) {
 
             List<Geofence> triggeringGeofences = geofencingEvent.getTriggeringGeofences();
@@ -74,7 +73,6 @@ public class GeofenceTrasitionService extends IntentService {
     }
 
     private void sendNotification( String msg ) {
-        Log.i(TAG, "sendNotification: " + msg );
 
         Intent notificationIntent = GeoFenceMainActivity.makeNotificationIntent(
                 getApplicationContext(), msg
@@ -91,24 +89,36 @@ public class GeofenceTrasitionService extends IntentService {
                 GEOFENCE_NOTIFICATION_ID,
                 createNotification(msg, notificationPendingIntent));
 
+
+
+
+
     }
     private Notification createNotification(String msg, PendingIntent notificationPendingIntent) {
+
+
+        TimerActivity time=new TimerActivity();
+
+
+        String notificationMessage="You have reached your spot in ";
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
         notificationBuilder
                 .setSmallIcon(R.drawable.logo)
                 .setColor(Color.BLACK)
                 .setContentTitle(msg)
-                .setContentText(GEOFENCE_NOTIFICATION)
+                .setContentText(notificationMessage+TimerActivity.test)
                 .setContentIntent(notificationPendingIntent)
                 .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
                 .setAutoCancel(true);
         return notificationBuilder.build();
+
     }
 
     private static String getErrorString(int errorCode) {
         switch (errorCode) {
             case GeofenceStatusCodes.GEOFENCE_NOT_AVAILABLE:
-                return "";
+                return GEOFENCE_NOT_AVAILABLE;
             case GeofenceStatusCodes.GEOFENCE_TOO_MANY_GEOFENCES:
                 return GEOFENCES_TO_MANY;
             case GeofenceStatusCodes.GEOFENCE_TOO_MANY_PENDING_INTENTS:

@@ -14,7 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <service android:name=".geofence.GeofenceTrasitionService" />
 
         <meta-data
@@ -31,7 +30,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".geofence.GeoFenceMainActivity"></activity>
+        <activity android:name=".geofence.GeoFenceMainActivity" />
+        <activity android:name=".geofence.TimerActivity"></activity>
     </application>
 
 </manifest>
