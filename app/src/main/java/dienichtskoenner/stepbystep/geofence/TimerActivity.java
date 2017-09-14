@@ -50,7 +50,7 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
 
         initViews();
         initListeners();
-        getTime();
+        //getTime();
     }
 
     @Override
@@ -88,9 +88,9 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
     protected void onResume()
     {
         super.onResume();
-        getTime();
+        //getTime();
     }
-
+/*
     public void getTime(){
 
         TestClass testClass=new TestClass();
@@ -113,7 +113,7 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
         }
 
     }
-
+*/
     private void initListeners() {
         imageViewReset.setOnClickListener(this);
         imageViewStartStop.setOnClickListener(this);
