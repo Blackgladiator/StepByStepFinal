@@ -83,6 +83,7 @@ public class FragmentTop extends Fragment implements SensorEventListener {
         if (running) {
             tv_steps.setText(String.valueOf(sensorEvent.values[0]));
             distanceValue.setText(String.valueOf((sensorEvent.values[0] * 75)/100) +" m");
+            calories.setText(String.valueOf((sensorEvent.values[0]* 0.06)+ " kcal"));
         }
 
     }
