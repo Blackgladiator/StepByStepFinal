@@ -171,7 +171,7 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
             time = Integer.parseInt(editTextMinute.getText().toString().trim());
         } else {
             // toast message to fill edit text
-            Toast.makeText(getApplicationContext(), getString(R.string.message_minutes), Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Please enter minutes", Toast.LENGTH_LONG).show();
         }
         // assigning values after converting to milliseconds
         timeCountInMilliSeconds = time * 60 * 1000;
