@@ -9,7 +9,7 @@
     <string name="tempoValue">0km/h</string>
     <string name="caloriesValue">0 kcal</string>
 
-    <!-- Strings in FragmentBottom-->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="activate_internet_gps"></string>
     <string name="refresh">REFRESH</string>
     <string name="activate_gps_dialog">GPS singal not found. Please check your device settings</string>
@@ -17,17 +17,4 @@
     <string name="disable">DISABLE</string>
     <string name="activate_gps">No GPS detected</string>
     <string name="activate_internet">No Internet detected</string>
-
-    <!-- Strings in GeofenceTrasitionService-->
-    <string name="no_marker_found">Tap a spot in the map</string>
-    <string name="geofence_notification">You have reached your spot</string>
-    <string name="geofence_not_available">GeoFence not available</string>
-    <string name="geofence_to_many">To many GeoFences</string>
-    <string name="geofence_unknown_error">Unknown error</string>
-    <string name="pending_intents_to_many">To many Pending Intents</string>
-
-    <string name="hint_minute">Minute</string>
-    <string name="message_minutes">Please Enter Minutes...</string>
-
-
 </resources>

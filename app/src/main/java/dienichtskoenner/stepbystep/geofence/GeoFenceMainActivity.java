@@ -144,11 +144,11 @@ public class GeoFenceMainActivity extends AppCompatActivity
                     startGeofenceButton.setAlpha(.5f);
                     startGeofence();
 
-                            Intent startTimer=new Intent(GeoFenceMainActivity.this,TimerActivity.class);
-                            startActivity(startTimer);
+                    Intent startTimer=new Intent(GeoFenceMainActivity.this,TimerActivity.class);
+                    startActivity(startTimer);
 
                 }else{
-                    Toast.makeText(getApplicationContext(),R.string.no_marker_found, Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(),R.string.no_marker_found, Toast.LENGTH_LONG).show();
                 }
             }
         });

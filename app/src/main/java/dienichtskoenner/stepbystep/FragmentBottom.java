@@ -188,7 +188,7 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
             final AlertDialog alert = builder.create();
             alert.show();
         }else {
-          errorMessageNoInternetNoGPS();
+            errorMessageNoInternetNoGPS();
         }
     }
 

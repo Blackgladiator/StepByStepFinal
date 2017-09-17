@@ -67,7 +67,7 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if(running){
-           tv_steps.setText(String.valueOf(sensorEvent.values[0]));
+            tv_steps.setText(String.valueOf(sensorEvent.values[0]));
         }
 
     }
