@@ -16,15 +16,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FragmentTop extends Fragment implements SensorEventListener {
 
+
+
     SensorManager sensorManager;
+    private final static int MICROSECONDS_IN_ONE_MINUTE = 60000000;
+
+    private static int steps;
+    private static int lastSaveSteps;
+    private static long lastSaveTime;
 
     boolean running = false;
     private TextView tv_steps;
+    private TextView distanceValue;
+    private TextView tempo;
+    private TextView calories;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,6 +49,9 @@ public class FragmentTop extends Fragment implements SensorEventListener {
         super.onViewCreated(view, savedInstanceState);
 
         tv_steps = (TextView) getView().findViewById(R.id.currentDay);
+        distanceValue = (TextView) getView().findViewById(R.id.distanceValue);
+        tempo = (TextView) getView().findViewById(R.id.tempoValue);
+        calories = (TextView) getView().findViewById(R.id.caloriesValue);
 
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
 
@@ -49,9 +63,9 @@ public class FragmentTop extends Fragment implements SensorEventListener {
         super.onResume();
         running = true;
         Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-        if(countSensor != null){
+        if (countSensor != null) {
             sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
-        }else{
+        } else {
             Toast.makeText(getActivity(), "Sensor not found", Toast.LENGTH_SHORT).show();
 
         }
@@ -66,8 +80,9 @@ public class FragmentTop extends Fragment implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if(running){
+        if (running) {
             tv_steps.setText(String.valueOf(sensorEvent.values[0]));
+            distanceValue.setText(String.valueOf((sensorEvent.values[0] * 75)/100) +" m");
         }
 
     }
@@ -77,3 +92,8 @@ public class FragmentTop extends Fragment implements SensorEventListener {
 
     }
 }
+
+
+
+
+
