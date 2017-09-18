@@ -20,6 +20,20 @@ android {
     }
 }
 
+/**
+ * {https://github.com/PhilJay/MPAndroidChart}
+ */
+
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
+
+dependencies {
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+}
+
 dependencies {
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
