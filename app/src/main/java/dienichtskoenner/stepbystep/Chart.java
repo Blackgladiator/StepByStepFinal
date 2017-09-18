@@ -2,6 +2,8 @@ package dienichtskoenner.stepbystep;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -32,10 +34,37 @@ public class Chart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
 
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.logo);
+
+
         barChart = (BarChart) findViewById(R.id.barchart);
 
         createRandomBarGraph ("2016/05/05", "2016/06/01");
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        switch (item.getItemId()){
+            case R.id.action_bar_chart:
+                break;
+            case R.id.action_bar_location:
+                break;
+            case R.id.action_bar_geofence:
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return false;
     }
 
     public void createRandomBarGraph (String Date1, String Date2){
