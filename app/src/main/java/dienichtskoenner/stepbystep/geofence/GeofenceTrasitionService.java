@@ -21,6 +21,11 @@ import java.util.List;
 
 import dienichtskoenner.stepbystep.R;
 
+/**
+ * Created by c.lisik on 01.09.2017.
+ * A high part of this Code was used by a tutorial from https://code.tutsplus.com/tutorials/how-to-work-with-geofences-on-android--cms-26639
+ */
+
 public class GeofenceTrasitionService extends IntentService {
 
     private static final String TAG = GeofenceTrasitionService.class.getSimpleName();
@@ -39,7 +44,7 @@ public class GeofenceTrasitionService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
-        // Handling errors
+
         if ( geofencingEvent.hasError() ) {
             String errorMsg = getErrorString(geofencingEvent.getErrorCode() );
             Log.e( TAG, errorMsg );

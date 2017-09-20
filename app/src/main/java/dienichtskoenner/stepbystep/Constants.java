@@ -33,9 +33,6 @@ public class Constants {
         public static final long GEO_DURATION = 60 * 60 * 1000;
 
         public static final float GEOFENCE_RADIUS = 400.0f; // meters
-
-
-
     }
 
 

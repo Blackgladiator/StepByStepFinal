@@ -46,6 +46,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import dienichtskoenner.stepbystep.Constants;
 import dienichtskoenner.stepbystep.R;
 
+/**
+ * Created by c.lisik on 01.09.2017.
+ * A high part of this Code was used by a tutorial from https://code.tutsplus.com/tutorials/how-to-work-with-geofences-on-android--cms-26639
+ */
+
 public class GeoFenceMainActivity extends AppCompatActivity
         implements
         GoogleApiClient.ConnectionCallbacks,

@@ -156,12 +156,13 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    //Code "isNetworkAvailable()" by https://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-times-out
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
-
+    ////Code "buildAlertMessageNoGps" by https://github.com/krvarma/krvarma-android-samples/blob/master/CheckGPS/src/com/varma/samples/checkgps/MainActivity.java
     private void buildAlertMessageNoGps() {
 
         if(isNetworkAvailable()){

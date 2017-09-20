@@ -17,6 +17,11 @@ import java.util.concurrent.TimeUnit;
 
 import dienichtskoenner.stepbystep.R;
 
+/**
+ * Created by c.lisik on 05.09.2017.
+ * A high part of this Code was used by a tutorial from //http://www.androidtutorialshub.com/android-count-down-timer-tutorial/
+ */
+
 public class TimerActivity extends AppCompatActivity implements View.OnClickListener{
 
 
