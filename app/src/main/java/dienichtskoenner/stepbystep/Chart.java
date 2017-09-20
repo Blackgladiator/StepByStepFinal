@@ -76,14 +76,14 @@ public class Chart extends AppCompatActivity {
     private void initBarChart(){
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(44f, 0));
-        barEntries.add(new BarEntry(88f, 1));
-        barEntries.add(new BarEntry(66f, 2));
-        barEntries.add(new BarEntry(44f, 3));
-        barEntries.add(new BarEntry(12f, 4));
-        barEntries.add(new BarEntry(19f, 5));
-        barEntries.add(new BarEntry(91f, 6));
-        barEntries.add(new BarEntry(44f, 7));
+        barEntries.add(new BarEntry(1f, 12));
+        barEntries.add(new BarEntry(2f, 16));
+        barEntries.add(new BarEntry(3f, 20));
+        barEntries.add(new BarEntry(4f, 4));
+        barEntries.add(new BarEntry(5f, 8));
+        barEntries.add(new BarEntry(6f, 2));
+        barEntries.add(new BarEntry(7f, 27));
+        barEntries.add(new BarEntry(8f, 19));
         BarDataSet barDataSet = new BarDataSet (barEntries, "Steps");
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
