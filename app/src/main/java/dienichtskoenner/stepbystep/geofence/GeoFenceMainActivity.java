@@ -43,6 +43,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import dienichtskoenner.stepbystep.Chart;
 import dienichtskoenner.stepbystep.Constants;
 import dienichtskoenner.stepbystep.R;
 
@@ -109,15 +110,14 @@ public class GeoFenceMainActivity extends AppCompatActivity
 
         switch (item.getItemId()){
             case R.id.action_bar_chart:
+                Intent intent = new Intent(this, Chart.class);
+                startActivity(intent);
                 break;
-            case R.id.action_bar_location:
-                break;
-            case R.id.action_bar_geofence:
-                break;
+            case R.id.action_bar_geofence:break;
 
-            default:
-                return super.onOptionsItemSelected(item);
+            default:return super.onOptionsItemSelected(item);
         }
+
         return false;
     }
 

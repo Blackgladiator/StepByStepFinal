@@ -1,6 +1,7 @@
 package dienichtskoenner.stepbystep.geofence;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.concurrent.TimeUnit;
 
+import dienichtskoenner.stepbystep.Chart;
 import dienichtskoenner.stepbystep.R;
 
 /**
@@ -69,15 +71,14 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
 
         switch (item.getItemId()){
             case R.id.action_bar_chart:
+                Intent intent = new Intent(this, Chart.class);
+                startActivity(intent);
                 break;
-            case R.id.action_bar_location:
-                break;
-            case R.id.action_bar_geofence:
-                break;
+            case R.id.action_bar_geofence:break;
 
-            default:
-                return super.onOptionsItemSelected(item);
+            default:return super.onOptionsItemSelected(item);
         }
+
         return false;
     }
 
