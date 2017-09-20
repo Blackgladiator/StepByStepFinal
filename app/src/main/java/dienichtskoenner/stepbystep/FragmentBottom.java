@@ -29,15 +29,12 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FragmentBottom extends Fragment implements OnMapReadyCallback {
 
-    private static final int REQUEST_LOCATION=1;
-    private static final float ZOOM_LOCATION=15;
-    private static final int TILT_LOCATION=0;
+
 
     public static boolean noGPS;
     public static boolean isLocationPermissionGranted;
@@ -55,11 +52,10 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_bottom, container, false);
     }
 
@@ -113,7 +109,7 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             isLocationPermissionGranted = false;
-            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Constants.ConstantsFragmentBottom.REQUEST_LOCATION);
         } else {
             isLocationPermissionGranted=true;
             location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -138,7 +134,7 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
             isLocationPermissionGranted= true;
         } else {
             isLocationPermissionGranted=false;
-            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Constants.ConstantsFragmentBottom.REQUEST_LOCATION);
         }
 
         if (isLocationPermissionGranted) {
@@ -147,11 +143,14 @@ public class FragmentBottom extends Fragment implements OnMapReadyCallback {
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(latti,longi))
-                    .zoom(ZOOM_LOCATION)
-                    .tilt(TILT_LOCATION)
+                    .zoom(Constants.ConstantsFragmentBottom.ZOOM_LOCATION)
+                    .tilt(Constants.ConstantsFragmentBottom.TILT_LOCATION)
                     .build();
             CameraUpdate cameraUpdate= CameraUpdateFactory.newCameraPosition(cameraPosition);
+
             mMap.animateCamera(cameraUpdate);
+
+
         }else{
             prepareMap();
         }

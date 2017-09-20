@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +43,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import dienichtskoenner.stepbystep.Constants;
 import dienichtskoenner.stepbystep.R;
 
 public class GeoFenceMainActivity extends AppCompatActivity
@@ -55,19 +55,6 @@ public class GeoFenceMainActivity extends AppCompatActivity
         GoogleMap.OnMapClickListener,
         GoogleMap.OnMarkerClickListener,
         ResultCallback<Status> {
-
-    private static final String NOTIFICATION_MSG = "NOTIFICATION MSG";
-    private static final String TAG = GeoFenceMainActivity.class.getSimpleName();
-    private final int REQ_PERMISSION = 999;
-    private final int UPDATE_INTERVAL =  1000;
-    private final int FASTEST_INTERVAL = 900;
-    private static final long GEO_DURATION = 60 * 60 * 1000;
-    private static final String GEOFENCE_REQ_ID = "My Geofence";
-    private static final float GEOFENCE_RADIUS = 400.0f; // meters
-    private static final int GEOFENCE_ZOOM = 14;
-    private final String KEY_GEOFENCE_LAT = "GEOFENCE LATITUDE";
-    private final String KEY_GEOFENCE_LON = "GEOFENCE LONGITUDE";
-    private final int GEOFENCE_REQ_CODE = 0;
 
 
     private GoogleMap map;
@@ -102,7 +89,7 @@ public class GeoFenceMainActivity extends AppCompatActivity
 
     public static Intent makeNotificationIntent(Context context, String msg) {
         Intent intent = new Intent( context, GeoFenceMainActivity.class );
-        intent.putExtra( NOTIFICATION_MSG, msg );
+        intent.putExtra(Constants.ConstantsGeoFenceMainActivity.NOTIFICATION_MSG, msg );
         return intent;
     }
 
@@ -148,7 +135,7 @@ public class GeoFenceMainActivity extends AppCompatActivity
                     startActivity(startTimer);
 
                 }else{
-                   // Toast.makeText(getApplicationContext(),R.string.no_marker_found, Toast.LENGTH_LONG).show();
+                   Toast.makeText(getApplicationContext(),R.string.no_marker_found, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -164,7 +151,6 @@ public class GeoFenceMainActivity extends AppCompatActivity
     }
 
     private void createGoogleApi() {
-        Log.d(TAG, "createGoogleApi()");
         if ( googleApiClient == null ) {
             googleApiClient = new GoogleApiClient.Builder( this )
                     .addConnectionCallbacks( this )
@@ -197,7 +183,7 @@ public class GeoFenceMainActivity extends AppCompatActivity
         ActivityCompat.requestPermissions(
                 this,
                 new String[] { Manifest.permission.ACCESS_FINE_LOCATION },
-                REQ_PERMISSION
+                Constants.ConstantsGeoFenceMainActivity.REQ_PERMISSION
         );
     }
 
@@ -205,7 +191,7 @@ public class GeoFenceMainActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch ( requestCode ) {
-            case REQ_PERMISSION: {
+            case Constants.ConstantsGeoFenceMainActivity.REQ_PERMISSION: {
                 if ( grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED ){
 
@@ -219,7 +205,7 @@ public class GeoFenceMainActivity extends AppCompatActivity
     }
 
     private void permissionsDenied() {
-        Toast.makeText(getApplicationContext(), "Permission Denied", Toast.LENGTH_LONG).show();
+        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Constants.ConstantsFragmentBottom.REQUEST_LOCATION);
     }
 
     private void initGMaps(){
@@ -247,8 +233,8 @@ public class GeoFenceMainActivity extends AppCompatActivity
     private void startLocationUpdates(){
         locationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
-                .setInterval(UPDATE_INTERVAL)
-                .setFastestInterval(FASTEST_INTERVAL);
+                .setInterval(Constants.ConstantsGeoFenceMainActivity.UPDATE_INTERVAL)
+                .setFastestInterval(Constants.ConstantsGeoFenceMainActivity.FASTEST_INTERVAL);
 
         if ( checkPermission() )
             LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
@@ -308,7 +294,7 @@ public class GeoFenceMainActivity extends AppCompatActivity
 
             locationMarker = map.addMarker(markerOptions);
 
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, GEOFENCE_ZOOM);
+            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, Constants.ConstantsGeoFenceMainActivity.GEOFENCE_ZOOM);
             map.animateCamera(cameraUpdate);
         }
     }
@@ -332,7 +318,7 @@ public class GeoFenceMainActivity extends AppCompatActivity
 
     private void startGeofence() {
         if( geoFenceMarker != null ) {
-            Geofence geofence = createGeofence( geoFenceMarker.getPosition(), GEOFENCE_RADIUS );
+            Geofence geofence = createGeofence( geoFenceMarker.getPosition(), Constants.ConstantsGeoFenceMainActivity.GEOFENCE_RADIUS );
             GeofencingRequest geofenceRequest = createGeofenceRequest( geofence );
             addGeofence( geofenceRequest );
         }
@@ -340,9 +326,9 @@ public class GeoFenceMainActivity extends AppCompatActivity
 
     private Geofence createGeofence( LatLng latLng, float radius ) {
         return new Geofence.Builder()
-                .setRequestId(GEOFENCE_REQ_ID)
+                .setRequestId(Constants.ConstantsGeoFenceMainActivity.GEOFENCE_REQ_ID)
                 .setCircularRegion( latLng.latitude, latLng.longitude, radius)
-                .setExpirationDuration( GEO_DURATION )
+                .setExpirationDuration( Constants.ConstantsGeoFenceMainActivity.GEO_DURATION )
                 .setTransitionTypes( Geofence.GEOFENCE_TRANSITION_ENTER
                         | Geofence.GEOFENCE_TRANSITION_EXIT )
                 .build();
@@ -361,7 +347,7 @@ public class GeoFenceMainActivity extends AppCompatActivity
 
         Intent intent = new Intent( this, GeofenceTrasitionService.class);
         return PendingIntent.getService(
-                this, GEOFENCE_REQ_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT );
+                this, Constants.ConstantsGeoFenceMainActivity.GEOFENCE_REQ_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT );
     }
 
     private void addGeofence(GeofencingRequest request) {
@@ -392,7 +378,7 @@ public class GeoFenceMainActivity extends AppCompatActivity
                 .center( geoFenceMarker.getPosition())
                 .strokeColor(Color.argb(50, 70,70,70))
                 .fillColor( Color.argb(100, 150,150,150) )
-                .radius( GEOFENCE_RADIUS );
+                .radius( Constants.ConstantsGeoFenceMainActivity.GEOFENCE_RADIUS );
         geoFenceLimits = map.addCircle( circleOptions );
     }
 
@@ -400,17 +386,17 @@ public class GeoFenceMainActivity extends AppCompatActivity
         SharedPreferences sharedPref = getPreferences( Context.MODE_PRIVATE );
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        editor.putLong( KEY_GEOFENCE_LAT, Double.doubleToRawLongBits( geoFenceMarker.getPosition().latitude ));
-        editor.putLong( KEY_GEOFENCE_LON, Double.doubleToRawLongBits( geoFenceMarker.getPosition().longitude ));
+        editor.putLong( Constants.ConstantsGeoFenceMainActivity.KEY_GEOFENCE_LAT, Double.doubleToRawLongBits( geoFenceMarker.getPosition().latitude ));
+        editor.putLong( Constants.ConstantsGeoFenceMainActivity.KEY_GEOFENCE_LON, Double.doubleToRawLongBits( geoFenceMarker.getPosition().longitude ));
         editor.apply();
     }
 
     private void recoverGeofenceMarker() {
         SharedPreferences sharedPref = getPreferences( Context.MODE_PRIVATE );
 
-        if ( sharedPref.contains( KEY_GEOFENCE_LAT ) && sharedPref.contains( KEY_GEOFENCE_LON )) {
-            double lat = Double.longBitsToDouble( sharedPref.getLong( KEY_GEOFENCE_LAT, -1 ));
-            double lon = Double.longBitsToDouble( sharedPref.getLong( KEY_GEOFENCE_LON, -1 ));
+        if ( sharedPref.contains( Constants.ConstantsGeoFenceMainActivity.KEY_GEOFENCE_LAT ) && sharedPref.contains( Constants.ConstantsGeoFenceMainActivity.KEY_GEOFENCE_LON )) {
+            double lat = Double.longBitsToDouble( sharedPref.getLong( Constants.ConstantsGeoFenceMainActivity.KEY_GEOFENCE_LAT, -1 ));
+            double lon = Double.longBitsToDouble( sharedPref.getLong( Constants.ConstantsGeoFenceMainActivity.KEY_GEOFENCE_LON, -1 ));
             LatLng latLng = new LatLng( lat, lon );
             markerForGeofence(latLng);
             drawGeofence();
