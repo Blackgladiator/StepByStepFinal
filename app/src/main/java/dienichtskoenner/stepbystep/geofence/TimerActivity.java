@@ -173,13 +173,12 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
     private void setTimerValues() {
         int time = 0;
         if (!editTextMinute.getText().toString().isEmpty()) {
-            // fetching value from edit text and type cast to integer
+
             time = Integer.parseInt(editTextMinute.getText().toString().trim());
         } else {
-            // toast message to fill edit text
             Toast.makeText(getApplicationContext(), "Please enter minutes", Toast.LENGTH_LONG).show();
         }
-        // assigning values after converting to milliseconds
+
         timeCountInMilliSeconds = time * 60 * 1000;
     }
 
@@ -198,15 +197,12 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
             public void onFinish() {
 
                 textViewTime.setText(hmsTimeFormatter(timeCountInMilliSeconds));
-                // call to initialize the progress bar values
+
                 setProgressBarValues();
-                // hiding the reset icon
+
                 imageViewReset.setVisibility(View.GONE);
-                // changing stop icon to start icon
                 imageViewStartStop.setImageResource(R.drawable.icon_start);
-                // making edit text editable
                 editTextMinute.setEnabled(true);
-                // changing the timer status to stopped
                 timerStatus = TimerStatus.STOPPED;
             }
 
