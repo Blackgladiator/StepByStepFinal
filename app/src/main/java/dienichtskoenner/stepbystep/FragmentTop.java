@@ -94,8 +94,3 @@ public class FragmentTop extends Fragment implements SensorEventListener {
 
     }
 }
-
-
-
-
-
