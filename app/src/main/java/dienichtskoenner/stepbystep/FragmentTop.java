@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -81,12 +80,14 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (running) {
-            tv_steps.setText(String.valueOf(sensorEvent.values[0]));
-            distanceValue.setText(String.valueOf((sensorEvent.values[0] * 75)/100) +" m");
-            calories.setText(String.valueOf((sensorEvent.values[0]* 0.06)+ " kcal"));
+            steps = (int) sensorEvent.values[0];
+            tv_steps.setText(String.valueOf(steps));
+            distanceValue.setText(String.valueOf((int)(sensorEvent.values[0] * 75)/100) +" m");
+            calories.setText(String.valueOf((int)(sensorEvent.values[0]* 0.06)+ " kcal"));
         }
 
     }
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
