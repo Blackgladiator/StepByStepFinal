@@ -6,17 +6,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 
 /**
  * Created by felixgross on 06.09.17.
@@ -26,6 +24,8 @@ import java.util.Random;
 public class Chart extends AppCompatActivity {
 
     BarChart barChart;
+
+    final String[] bars = new String[] {"Today", "1 Day Ago", "2 Days Ago", "3 Days Ago", "4 Days Ago", "5 Days Ago", "6 Days Ago", "7 Days Ago"};
 
     int today;
     int one_day_ago;
@@ -76,14 +76,14 @@ public class Chart extends AppCompatActivity {
     private void initBarChart(){
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(1f, 12));
-        barEntries.add(new BarEntry(2f, 16));
-        barEntries.add(new BarEntry(3f, 20));
-        barEntries.add(new BarEntry(4f, 4));
-        barEntries.add(new BarEntry(5f, 8));
-        barEntries.add(new BarEntry(6f, 2));
-        barEntries.add(new BarEntry(7f, 27));
-        barEntries.add(new BarEntry(8f, 19));
+        barEntries.add(new BarEntry(0f, 12));
+        barEntries.add(new BarEntry(1f, 16));
+        barEntries.add(new BarEntry(2f, 20));
+        barEntries.add(new BarEntry(3f, 4));
+        barEntries.add(new BarEntry(4f, 8));
+        barEntries.add(new BarEntry(5f, 2));
+        barEntries.add(new BarEntry(6f, 27));
+        barEntries.add(new BarEntry(7f, 19));
         BarDataSet barDataSet = new BarDataSet (barEntries, "Steps");
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
@@ -101,11 +101,24 @@ public class Chart extends AppCompatActivity {
         theDays.add("7 Days Ago");
 
         BarData theData = new BarData(dataSets);
+        theData.setBarWidth(0.9f);
         barChart.setData(theData);
+        barChart.setFitBars(true);
         barChart.setTouchEnabled(true);
         barChart.setDragEnabled(true);
         barChart.setScaleEnabled(true);
-
+        barChart.invalidate();
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextSize(10f);
+        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return bars[(int) value];
+            }
+        });
     }
 
 }
