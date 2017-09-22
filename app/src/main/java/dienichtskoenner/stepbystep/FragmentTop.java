@@ -1,6 +1,7 @@
 package dienichtskoenner.stepbystep;
 
 
+import android.app.AlarmManager;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -15,12 +16,20 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FragmentTop extends Fragment implements SensorEventListener {
 
+
+
+
+    private Database db;
 
 
     SensorManager sensorManager;
@@ -30,11 +39,15 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     private static int lastSaveSteps;
     private static long lastSaveTime;
 
+
+
     boolean running = false;
     private TextView tv_steps;
     private TextView distanceValue;
     private TextView tempo;
     private TextView calories;
+    private Date date ;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,12 +71,39 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        running = true;
+        tv_steps.setText(String.valueOf(0));
+
+
+    }
+
+    public static int getSteps() {
+        return steps;
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        running = false;
+        db.saveCurrentSteps(steps);
+
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         running = true;
         Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        lastSaveTime = System.currentTimeMillis()+ AlarmManager.INTERVAL_DAY;
+
+
+
         if (countSensor != null) {
             sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
+
         } else {
             Toast.makeText(getActivity(), "Sensor not found", Toast.LENGTH_SHORT).show();
 
@@ -77,16 +117,40 @@ public class FragmentTop extends Fragment implements SensorEventListener {
         //sensorManager.unregisterListener(this);
     }
 
+    public long getMidgnight(){
+        Calendar c = new GregorianCalendar();
+        c.set(Calendar.HOUR_OF_DAY,0);
+        c.set(Calendar.MINUTE,0);
+        c.set(Calendar.SECOND,0);
+
+        return c.getTimeInMillis();
+    }
+
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        if (running) {
-            steps = (int) sensorEvent.values[0];
-            tv_steps.setText(String.valueOf(steps));
-            distanceValue.setText(String.valueOf((int)(sensorEvent.values[0] * 75)/100) +" m");
-            calories.setText(String.valueOf((int)(sensorEvent.values[0]* 0.06)+ " kcal"));
-        }
+            if (running) {
+               steps  = (int)sensorEvent.values[0]- lastSaveSteps;
+                if (System.currentTimeMillis() == getMidgnight()){
+                    db.insertNewDay(UtilC.getToday(),steps);
+                    db.saveCurrentSteps(steps);
+                    db.addToLastEntry(steps-lastSaveSteps);
+                    lastSaveSteps =(int) sensorEvent.values[0];
+                    steps =  (int) sensorEvent.values[0]- lastSaveSteps;
+                    tv_steps.setText(String.valueOf(steps));
+
+
+
+                }
+
+                tv_steps.setText(String.valueOf(steps));
+                distanceValue.setText(String.valueOf((int)(steps * 75)/100) +" m");
+                calories.setText(String.valueOf((int)(steps* 0.06)+ " kcal"));
+            }
+
 
     }
+
+
 
 
     @Override
@@ -94,3 +158,37 @@ public class FragmentTop extends Fragment implements SensorEventListener {
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
