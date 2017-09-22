@@ -84,7 +84,7 @@ public class Chart extends AppCompatActivity {
         barEntries.add(new BarEntry(5f, 2));
         barEntries.add(new BarEntry(6f, 27));
         barEntries.add(new BarEntry(7f, 19));
-        BarDataSet barDataSet = new BarDataSet (barEntries, "Steps");
+        BarDataSet barDataSet = new BarDataSet (barEntries, "Steps per Day");
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
 
@@ -108,9 +108,10 @@ public class Chart extends AppCompatActivity {
         barChart.setDragEnabled(true);
         barChart.setScaleEnabled(true);
         barChart.invalidate();
+        barChart.getDescription().setEnabled(false);
         XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(10f);
+        xAxis.setTextSize(0.9f);
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
