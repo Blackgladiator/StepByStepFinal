@@ -203,7 +203,7 @@ public class Database extends SQLiteOpenHelper{
     }
 
 
-    public int getStepsYesterDay(final long date) {
+    public int getStepsOneDayAgo(final long date) {
         Cursor c = getReadableDatabase()
                 .query(DB_NAME, new String[]{"steps"}, "date = ?",
                         new String[]{String.valueOf(date)}, null, null, null);
