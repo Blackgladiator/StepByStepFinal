@@ -75,7 +75,9 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     public void onStart() {
         super.onStart();
         running = true;
-        tv_steps.setText(String.valueOf(0));
+        lastSaveSteps= steps;
+        steps = steps-lastSaveSteps;
+        tv_steps.setText(String.valueOf(steps));
 
 
     }
@@ -121,8 +123,8 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     public long getMidgnight(){
         Calendar c = new GregorianCalendar();
         c.setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
-        c.set(Calendar.HOUR_OF_DAY,20);
-        c.set(Calendar.MINUTE,3);
+        c.set(Calendar.HOUR_OF_DAY,19);
+        c.set(Calendar.MINUTE,59);
         c.set(Calendar.SECOND,0);
 
         return c.getTimeInMillis();
@@ -131,17 +133,18 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (running) {
-            steps  = (int)sensorEvent.values[0]- lastSaveSteps;
+
             if (System.currentTimeMillis() == getMidgnight()){
                 db.insertNewDay(UtilC.getToday(),steps);
                 db.saveCurrentSteps(steps);
                 db.addToLastEntry(steps-lastSaveSteps);
                 lastSaveSteps =(int) sensorEvent.values[0];
                 steps =  (int) sensorEvent.values[0]- lastSaveSteps;
-                tv_steps.setText(String.valueOf(steps));
 
 
 
+            }else{
+                steps  = (int)sensorEvent.values[0]- lastSaveSteps;
             }
 
             tv_steps.setText(String.valueOf(steps));
