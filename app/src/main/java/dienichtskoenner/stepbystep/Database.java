@@ -10,6 +10,7 @@ import android.util.Pair;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Created by thomasslawik on 17.09.17.
@@ -81,6 +82,11 @@ public class Database extends SQLiteOpenHelper{
                 getWritableDatabase().insert(DB_NAME,null, contentValues);
             }
             c.close();
+            if (BuildConfig.DEBUG){
+                Logger.getLogger("insertDay " + date + " / " + steps);
+
+
+            }
             getWritableDatabase().setTransactionSuccessful();
         }finally {
             getWritableDatabase().endTransaction();
@@ -115,6 +121,99 @@ public class Database extends SQLiteOpenHelper{
         Pair<Date, Integer> p = new Pair<Date, Integer>(new Date(c.getLong(0)), c.getInt(1));
         c.close();
         return p;
+    }
+
+
+    public int getStepsSevenDaysAgo(final long date) {
+        Cursor c = getReadableDatabase()
+                .query(DB_NAME, new String[]{"steps"}, "date = ?",
+                        new String[]{String.valueOf(date)}, null, null, null);
+        c.moveToFirst();
+        c.move(7);
+        int re;
+        if (c.getCount() == 0) re = Integer.MIN_VALUE;
+        else re = c.getInt(0);
+        c.close();
+        return re;
+    }
+
+    public int getStepsSixDaysAgo(final long date) {
+        Cursor c = getReadableDatabase()
+                .query(DB_NAME, new String[]{"steps"}, "date = ?",
+                        new String[]{String.valueOf(date)}, null, null, null);
+        c.moveToFirst();
+        c.move(6);
+        int re;
+        if (c.getCount() == 0) re = Integer.MIN_VALUE;
+        else re = c.getInt(0);
+        c.close();
+        return re;
+    }
+
+    public int getStepsFiveDaysAgo(final long date) {
+        Cursor c = getReadableDatabase()
+                .query(DB_NAME, new String[]{"steps"}, "date = ?",
+                        new String[]{String.valueOf(date)}, null, null, null);
+        c.moveToFirst();
+        c.move(5);
+        int re;
+        if (c.getCount() == 0) re = Integer.MIN_VALUE;
+        else re = c.getInt(0);
+        c.close();
+        return re;
+    }
+
+    public int getStepsFourDaysAgo(final long date) {
+        Cursor c = getReadableDatabase()
+                .query(DB_NAME, new String[]{"steps"}, "date = ?",
+                        new String[]{String.valueOf(date)}, null, null, null);
+        c.moveToFirst();
+        c.move(4);
+        int re;
+        if (c.getCount() == 0) re = Integer.MIN_VALUE;
+        else re = c.getInt(0);
+        c.close();
+        return re;
+    }
+
+    public int getStepsThreeDaysAgo(final long date) {
+        Cursor c = getReadableDatabase()
+                .query(DB_NAME, new String[]{"steps"}, "date = ?",
+                        new String[]{String.valueOf(date)}, null, null, null);
+        c.moveToFirst();
+        c.move(3);
+        int re;
+        if (c.getCount() == 0) re = Integer.MIN_VALUE;
+        else re = c.getInt(0);
+        c.close();
+        return re;
+    }
+
+    public int getStepsTwoDaysAgo(final long date) {
+        Cursor c = getReadableDatabase()
+                .query(DB_NAME, new String[]{"steps"}, "date = ?",
+                        new String[]{String.valueOf(date)}, null, null, null);
+        c.moveToFirst();
+        c.move(2);
+        int re;
+        if (c.getCount() == 0) re = Integer.MIN_VALUE;
+        else re = c.getInt(0);
+        c.close();
+        return re;
+    }
+
+
+    public int getStepsYesterDay(final long date) {
+        Cursor c = getReadableDatabase()
+                .query(DB_NAME, new String[]{"steps"}, "date = ?",
+                        new String[]{String.valueOf(date)}, null, null, null);
+        c.moveToFirst();
+        c.move(1);
+        int re;
+        if (c.getCount() == 0) re = Integer.MIN_VALUE;
+        else re = c.getInt(0);
+        c.close();
+        return re;
     }
 
 
