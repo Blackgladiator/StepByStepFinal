@@ -19,6 +19,7 @@ import android.widget.Toast;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 
 /**
@@ -119,8 +120,9 @@ public class FragmentTop extends Fragment implements SensorEventListener {
 
     public long getMidgnight(){
         Calendar c = new GregorianCalendar();
-        c.set(Calendar.HOUR_OF_DAY,0);
-        c.set(Calendar.MINUTE,0);
+        c.setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
+        c.set(Calendar.HOUR_OF_DAY,20);
+        c.set(Calendar.MINUTE,3);
         c.set(Calendar.SECOND,0);
 
         return c.getTimeInMillis();
@@ -128,24 +130,24 @@ public class FragmentTop extends Fragment implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-            if (running) {
-               steps  = (int)sensorEvent.values[0]- lastSaveSteps;
-                if (System.currentTimeMillis() == getMidgnight()){
-                    db.insertNewDay(UtilC.getToday(),steps);
-                    db.saveCurrentSteps(steps);
-                    db.addToLastEntry(steps-lastSaveSteps);
-                    lastSaveSteps =(int) sensorEvent.values[0];
-                    steps =  (int) sensorEvent.values[0]- lastSaveSteps;
-                    tv_steps.setText(String.valueOf(steps));
-
-
-
-                }
-
+        if (running) {
+            steps  = (int)sensorEvent.values[0]- lastSaveSteps;
+            if (System.currentTimeMillis() == getMidgnight()){
+                db.insertNewDay(UtilC.getToday(),steps);
+                db.saveCurrentSteps(steps);
+                db.addToLastEntry(steps-lastSaveSteps);
+                lastSaveSteps =(int) sensorEvent.values[0];
+                steps =  (int) sensorEvent.values[0]- lastSaveSteps;
                 tv_steps.setText(String.valueOf(steps));
-                distanceValue.setText(String.valueOf((int)(steps * 75)/100) +" m");
-                calories.setText(String.valueOf((int)(steps* 0.06)+ " kcal"));
+
+
+
             }
+
+            tv_steps.setText(String.valueOf(steps));
+            distanceValue.setText(String.valueOf((int)(steps * 75)/100) +" m");
+            calories.setText(String.valueOf((int)(steps* 0.06)+ " kcal"));
+        }
 
 
     }
@@ -158,33 +160,6 @@ public class FragmentTop extends Fragment implements SensorEventListener {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
