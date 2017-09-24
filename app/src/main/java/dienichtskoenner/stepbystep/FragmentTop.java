@@ -132,8 +132,8 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     public long getMidgnight() {
         Calendar c = new GregorianCalendar();
         c.setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
-        c.set(Calendar.HOUR_OF_DAY, 22);
-        c.set(Calendar.MINUTE, 56);
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        c.set(Calendar.MINUTE, 18);
         c.set(Calendar.SECOND, 30);
 
         return c.getTimeInMillis();
