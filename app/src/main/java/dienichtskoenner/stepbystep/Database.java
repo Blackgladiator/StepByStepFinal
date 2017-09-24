@@ -44,6 +44,8 @@ public class Database extends SQLiteOpenHelper{
 
     }
 
+
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion == 0){
@@ -96,6 +98,13 @@ public class Database extends SQLiteOpenHelper{
         }finally {
             getWritableDatabase().endTransaction();
         }
+    }
+    public void open(){
+        sInstance.getWritableDatabase();
+    }
+
+    public void close(){
+        sInstance.close();
     }
 
 
