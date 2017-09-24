@@ -30,8 +30,6 @@ public class Chart extends AppCompatActivity {
     final String[] bars = new String[] {"Today", "1 Day Ago", "2 Days Ago", "3 Days Ago", "4 Days Ago", "5 Days Ago", "6 Days Ago", "7 Days Ago"};
 
 
-
-
     int today = db.getSteps(UtilC.getToday());
     int one_day_ago = db.getStepsOneDayAgo(UtilC.getToday());;
     int two_days_ago = db.getStepsTwoDaysAgo(UtilC.getToday());;
@@ -50,9 +48,16 @@ public class Chart extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.logo);
 
+        initDatabase();
+
         barChart = (BarChart) findViewById(R.id.bargraph);
 
         initBarChart();
+    }
+
+    private void initDatabase() {
+        db = new Database(this);
+        db.open();
     }
 
     @Override
@@ -131,5 +136,11 @@ public class Chart extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
+    }
+
 
 }
