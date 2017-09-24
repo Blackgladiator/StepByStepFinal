@@ -23,8 +23,6 @@ import java.util.ArrayList;
 
 public class Chart extends AppCompatActivity {
 
-    private  Database db;
-
     BarChart barChart;
 
     final String[] bars = new String[] {"Today", "1 Day Ago", "2 Days Ago", "3 Days Ago", "4 Days Ago", "5 Days Ago", "6 Days Ago", "7 Days Ago"};
@@ -39,17 +37,11 @@ public class Chart extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.logo);
 
-        initDatabase();
-
         barChart = (BarChart) findViewById(R.id.bargraph);
 
         initBarChart();
     }
 
-    private void initDatabase() {
-        db = new Database(this);
-        db.open();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -78,14 +70,14 @@ public class Chart extends AppCompatActivity {
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         try{
-            barEntries.add(new BarEntry(0f, 45));
-            barEntries.add(new BarEntry(1f, 32));
-            barEntries.add(new BarEntry(2f, 43));
-            barEntries.add(new BarEntry(3f, 43));
-            barEntries.add(new BarEntry(4f, 34));
-            barEntries.add(new BarEntry(5f, 54));
-            barEntries.add(new BarEntry(6f, 54));
-            barEntries.add(new BarEntry(7f, 65));
+            barEntries.add(new BarEntry(0f, 12));
+            barEntries.add(new BarEntry(1f, 16));
+            barEntries.add(new BarEntry(2f, 23));
+            barEntries.add(new BarEntry(3f, 25));
+            barEntries.add(new BarEntry(4f, 14));
+            barEntries.add(new BarEntry(5f, 24));
+            barEntries.add(new BarEntry(6f, 10));
+            barEntries.add(new BarEntry(7f, 27));
         }catch (NullPointerException e){
 
         }
@@ -126,11 +118,6 @@ public class Chart extends AppCompatActivity {
                 return bars[(int) value];
             }
         });
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        db.close();
     }
 
 
