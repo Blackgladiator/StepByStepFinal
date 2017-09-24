@@ -23,18 +23,20 @@ import java.util.ArrayList;
 
 public class Chart extends AppCompatActivity {
 
+    Database db;
+
     BarChart barChart;
 
     final String[] bars = new String[] {"Today", "1 Day Ago", "2 Days Ago", "3 Days Ago", "4 Days Ago", "5 Days Ago", "6 Days Ago", "7 Days Ago"};
 
-    int today;
-    int one_day_ago;
-    int two_days_ago;
-    int three_days_ago;
-    int four_days_ago;
-    int five_days_ago;
-    int six_days_ago;
-    int seven_days_ago;
+    int today = db.getSteps(UtilC.getToday());
+    int one_day_ago = db.getStepsOneDayAgo(UtilC.getToday());;
+    int two_days_ago = db.getStepsTwoDaysAgo(UtilC.getToday());;
+    int three_days_ago = db.getStepsThreeDaysAgo(UtilC.getToday());
+    int four_days_ago = db.getStepsFourDaysAgo(UtilC.getToday());
+    int five_days_ago = db.getStepsFiveDaysAgo(UtilC.getToday());
+    int six_days_ago = db.getStepsSixDaysAgo(UtilC.getToday());
+    int seven_days_ago = db.getStepsSevenDaysAgo(UtilC.getToday());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,14 +78,14 @@ public class Chart extends AppCompatActivity {
     private void initBarChart(){
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
-        barEntries.add(new BarEntry(0f, 12));
-        barEntries.add(new BarEntry(1f, 16));
-        barEntries.add(new BarEntry(2f, 20));
-        barEntries.add(new BarEntry(3f, 4));
-        barEntries.add(new BarEntry(4f, 8));
-        barEntries.add(new BarEntry(5f, 2));
-        barEntries.add(new BarEntry(6f, 27));
-        barEntries.add(new BarEntry(7f, 19));
+        barEntries.add(new BarEntry(0f, today));
+        barEntries.add(new BarEntry(1f, one_day_ago));
+        barEntries.add(new BarEntry(2f, two_days_ago));
+        barEntries.add(new BarEntry(3f, three_days_ago));
+        barEntries.add(new BarEntry(4f, four_days_ago));
+        barEntries.add(new BarEntry(5f, five_days_ago));
+        barEntries.add(new BarEntry(6f, six_days_ago));
+        barEntries.add(new BarEntry(7f, seven_days_ago));
         BarDataSet barDataSet = new BarDataSet (barEntries, "Steps per Day");
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
