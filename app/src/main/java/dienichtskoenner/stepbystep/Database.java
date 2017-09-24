@@ -230,9 +230,10 @@ public class Database extends SQLiteOpenHelper{
                         new String[]{String.valueOf(date)}, null, null, null);
         c.moveToFirst();
         int re;
-        if (c.getCount() == 0) re = Integer.MIN_VALUE;
-        else re = c.getInt(0);
-        c.close();
+        if (c.getCount() == 0) {
+            re = Integer.MIN_VALUE;
+        } else{ re = c.getInt(0);
+        c.close();}
         return re;
     }
 

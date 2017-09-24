@@ -78,7 +78,6 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     public void onStart() {
         super.onStart();
         running = true;
-        startTime= (long) System.currentTimeMillis()/1000/60;
         lastSaveSteps= steps;
 
 
@@ -125,17 +124,7 @@ public class FragmentTop extends Fragment implements SensorEventListener {
         sensorManager.unregisterListener(this);
     }
 
-    public void  checkMidnight(){
-        try {
-            if (System.currentTimeMillis() == getMidgnight()){
 
-                stepsDisplay = steps-lastSaveSteps;
-            }
-        }catch (NullPointerException e){
-
-        }
-
-    }
 
 
 
@@ -156,16 +145,15 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (running) {
-            checkMidnight();
 
-            steps= (int) sensorEvent.values[0]-lastSaveSteps;
+
+
 
 
 
             if (System.currentTimeMillis() == getMidgnight()){
                 if (stepsDisplay != 0) {
                     db.insertNewDay(UtilC.getToday(), stepsDisplay);
-                    startTime= (int) System.currentTimeMillis()/1000/60;
                 }
                try {
                    db.saveCurrentSteps(stepsDisplay);
@@ -175,8 +163,7 @@ public class FragmentTop extends Fragment implements SensorEventListener {
 
                 db.addToLastEntry(stepsDisplay);
                 lastSaveSteps =(int) sensorEvent.values[0];
-                steps =  (int) sensorEvent.values[0]- lastSaveSteps;
-                stepsDisplay = steps;
+                steps= (int) sensorEvent.values[0]-lastSaveSteps;
 
 
 
@@ -184,6 +171,7 @@ public class FragmentTop extends Fragment implements SensorEventListener {
             }else{
               stepsDisplay = steps;
                 lastSaveSteps= steps;
+                steps= (int) sensorEvent.values[0]-lastSaveSteps;
             }
 
             tv_steps.setText(String.valueOf(stepsDisplay));
