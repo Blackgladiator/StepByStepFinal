@@ -78,7 +78,7 @@ public class Chart extends AppCompatActivity {
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         try{
-            barEntries.add(new BarEntry(0f, db.getSteps(UtilC.getToday())));
+            barEntries.add(new BarEntry(0f, 45));
             barEntries.add(new BarEntry(1f, 32));
             barEntries.add(new BarEntry(2f, 43));
             barEntries.add(new BarEntry(3f, 43));
