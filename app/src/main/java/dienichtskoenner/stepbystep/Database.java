@@ -70,16 +70,21 @@ public class Database extends SQLiteOpenHelper{
             Cursor c = getReadableDatabase().query(DB_NAME, new String[]{"date"}, "date = ?",
                     new String[]{String.valueOf(date)},null,null,null);
             if(c.getCount() == 0 && steps >=0){
-
-                //yesterdays steps
-                addToLastEntry(steps);
+                try {
 
 
-                //todays steps
-                ContentValues contentValues = new ContentValues();
-                contentValues.put("date", date);
-                contentValues.put("steps", -steps);
-                getWritableDatabase().insert(DB_NAME,null, contentValues);
+                    //yesterdays steps
+                    addToLastEntry(steps);
+
+
+                    //todays steps
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put("date", date);
+                    contentValues.put("steps", -steps);
+                    getWritableDatabase().insert(DB_NAME, null, contentValues);
+                }catch (NullPointerException d){
+
+                }
             }
             c.close();
             if (BuildConfig.DEBUG){

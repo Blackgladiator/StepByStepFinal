@@ -22,6 +22,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -30,15 +31,17 @@ public class FragmentTop extends Fragment implements SensorEventListener {
 
 
 
-    private Database db;
+    private Database db = new Database(getActivity());
 
 
     SensorManager sensorManager;
-    private final static int MICROSECONDS_IN_ONE_MINUTE = 60000000;
+    private final static int MICROSECONDS_IN_HOUR = 60000000*60;
 
-    private static int steps;
-    private static int lastSaveSteps;
-    private static long lastSaveTime;
+    private  int steps;
+    private  int lastSaveSteps;
+    private  long lastSaveTime;
+    private  int stepsDisplay;
+    private long startTime;
 
 
 
@@ -75,16 +78,16 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     public void onStart() {
         super.onStart();
         running = true;
+        startTime= (long) System.currentTimeMillis()/1000/60;
         lastSaveSteps= steps;
-        steps = steps-lastSaveSteps;
-        tv_steps.setText(String.valueOf(steps));
+
+       
+
 
 
     }
 
-    public static int getSteps() {
-        return steps;
-    }
+
 
 
     @Override
@@ -92,6 +95,7 @@ public class FragmentTop extends Fragment implements SensorEventListener {
         super.onDestroy();
         running = false;
         db.saveCurrentSteps(steps);
+        stepsDisplay = 0;
 
     }
 
@@ -101,6 +105,7 @@ public class FragmentTop extends Fragment implements SensorEventListener {
         running = true;
         Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         lastSaveTime = System.currentTimeMillis()+ AlarmManager.INTERVAL_DAY;
+        startTime = System.currentTimeMillis();
 
 
 
@@ -117,14 +122,33 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     public void onPause() {
         super.onPause();
         running = false;
-        //sensorManager.unregisterListener(this);
+        sensorManager.unregisterListener(this);
     }
+
+    public void  checkMidnight(){
+        try {
+            if (System.currentTimeMillis() == getMidgnight()){
+
+                stepsDisplay = steps-lastSaveSteps;
+            }
+        }catch (NullPointerException e){
+
+        }
+
+    }
+
+
+
+
+
+
+
 
     public long getMidgnight(){
         Calendar c = new GregorianCalendar();
         c.setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
-        c.set(Calendar.HOUR_OF_DAY,19);
-        c.set(Calendar.MINUTE,59);
+        c.set(Calendar.HOUR_OF_DAY,0);
+        c.set(Calendar.MINUTE,0);
         c.set(Calendar.SECOND,0);
 
         return c.getTimeInMillis();
@@ -133,23 +157,43 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         if (running) {
+            checkMidnight();
+
+
+            steps= (int) sensorEvent.values[0]-lastSaveSteps;
+
+
 
             if (System.currentTimeMillis() == getMidgnight()){
-                db.insertNewDay(UtilC.getToday(),steps);
-                db.saveCurrentSteps(steps);
-                db.addToLastEntry(steps-lastSaveSteps);
+                if (stepsDisplay != 0) {
+                    db.insertNewDay(UtilC.getToday(), stepsDisplay);
+                    startTime= (int) System.currentTimeMillis()/1000/60;
+                }
+               try {
+                   db.saveCurrentSteps(stepsDisplay);
+               }catch (NullPointerException e){
+
+               }
+
+                db.addToLastEntry(stepsDisplay);
                 lastSaveSteps =(int) sensorEvent.values[0];
                 steps =  (int) sensorEvent.values[0]- lastSaveSteps;
+                stepsDisplay = steps;
+
 
 
 
             }else{
-                steps  = (int)sensorEvent.values[0]- lastSaveSteps;
+              stepsDisplay = steps;
+                lastSaveSteps= steps;
             }
 
-            tv_steps.setText(String.valueOf(steps));
-            distanceValue.setText(String.valueOf((int)(steps * 75)/100) +" m");
-            calories.setText(String.valueOf((int)(steps* 0.06)+ " kcal"));
+            tv_steps.setText(String.valueOf(stepsDisplay));
+            distanceValue.setText(String.valueOf((int)(stepsDisplay * 75)/100) +" m");
+            calories.setText(String.valueOf((int)(stepsDisplay* 0.06)+ " kcal"));
+            tempo.setText(String.valueOf((int) ((((stepsDisplay*75))/((int)(60))))+"gaggl"));
+
+
         }
 
 
@@ -163,10 +207,5 @@ public class FragmentTop extends Fragment implements SensorEventListener {
 
     }
 }
-
-
-
-
-
 
 
