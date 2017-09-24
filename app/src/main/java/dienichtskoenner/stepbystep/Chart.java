@@ -30,15 +30,6 @@ public class Chart extends AppCompatActivity {
     final String[] bars = new String[] {"Today", "1 Day Ago", "2 Days Ago", "3 Days Ago", "4 Days Ago", "5 Days Ago", "6 Days Ago", "7 Days Ago"};
 
 
-    int today = db.getSteps(UtilC.getToday());
-    int one_day_ago = db.getStepsOneDayAgo(UtilC.getToday());;
-    int two_days_ago = db.getStepsTwoDaysAgo(UtilC.getToday());;
-    int three_days_ago = db.getStepsThreeDaysAgo(UtilC.getToday());
-    int four_days_ago = db.getStepsFourDaysAgo(UtilC.getToday());
-    int five_days_ago = db.getStepsFiveDaysAgo(UtilC.getToday());
-    int six_days_ago = db.getStepsSixDaysAgo(UtilC.getToday());
-    int seven_days_ago = db.getStepsSevenDaysAgo(UtilC.getToday());
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,14 +78,14 @@ public class Chart extends AppCompatActivity {
 
         ArrayList<BarEntry> barEntries = new ArrayList<>();
         try{
-            barEntries.add(new BarEntry(0f, today));
-            barEntries.add(new BarEntry(1f, one_day_ago));
-            barEntries.add(new BarEntry(2f, two_days_ago));
-            barEntries.add(new BarEntry(3f, three_days_ago));
-            barEntries.add(new BarEntry(4f, four_days_ago));
-            barEntries.add(new BarEntry(5f, five_days_ago));
-            barEntries.add(new BarEntry(6f, six_days_ago));
-            barEntries.add(new BarEntry(7f, seven_days_ago));
+            barEntries.add(new BarEntry(0f, db.getSteps(UtilC.getToday())));
+            barEntries.add(new BarEntry(1f, 32));
+            barEntries.add(new BarEntry(2f, 43));
+            barEntries.add(new BarEntry(3f, 43));
+            barEntries.add(new BarEntry(4f, 34));
+            barEntries.add(new BarEntry(5f, 54));
+            barEntries.add(new BarEntry(6f, 54));
+            barEntries.add(new BarEntry(7f, 65));
         }catch (NullPointerException e){
 
         }
