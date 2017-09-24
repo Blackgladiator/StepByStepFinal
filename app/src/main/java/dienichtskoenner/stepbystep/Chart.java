@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class Chart extends AppCompatActivity {
 
-    Database db;
+    private  Database db;
 
     BarChart barChart;
 
