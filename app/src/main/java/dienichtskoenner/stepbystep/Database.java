@@ -3,8 +3,10 @@ package dienichtskoenner.stepbystep;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.util.Pair;
 
 import java.util.ArrayList;
@@ -18,15 +20,35 @@ import java.util.logging.Logger;
 
 public class Database extends SQLiteOpenHelper{
 
+    private static final String LOG_TAG =  FragmentTop.class.getSimpleName();
+
     private static Database sInstance;
 
-    public final static String DB_NAME = "steps";
+    public final static String DB_NAME = "steps.db";
     public final static int DB_VERSION = 1;
+
+    public static final String TABLE_STEPS = "steps";
+
+
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_STEPS = "steps";
+    public static final String COLUMN_DATE = "date";
+
+
+    private SQLiteOpenHelper dbHelper;
+    private SQLiteDatabase db;
+
+    public static final String SQL_CREATE =
+            "CREATE TABLE " + TABLE_STEPS +
+                    "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_STEPS + " INTEGER NOT NULL, " +
+                    COLUMN_DATE + " TEXT NOT NULL);";
 
 
 
     public Database(final Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+        Log.d(LOG_TAG, "DbHelper hat die Datenbank : "+ getDatabaseName() + " erzeugt.");
 
     }
 
@@ -39,8 +61,15 @@ public class Database extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(final SQLiteDatabase db) {
+        try {
+            Log.d(LOG_TAG, "Die Tabelle wird mit SQL-Befehl: " + SQL_CREATE + "angelegt.");
+            db.execSQL(SQL_CREATE);
+        }
+        catch (Exception e){
+            Log.e(LOG_TAG, "Fehler beim Anlegen der Tabelle: " + e.getMessage());
+        }
 
-        db.execSQL("CREATE TABLE " + DB_NAME + " (date INTEGER, steps INTEGER)");
+      //  db.execSQL("CREATE TABLE " + DB_NAME + " (date INTEGER, steps INTEGER)");
 
     }
 
@@ -48,13 +77,8 @@ public class Database extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion == 0){
-            db.execSQL("CREATE TABLE " + DB_NAME + "1 (date INTEGER, steps INTEGER)");
-            db.execSQL("INSERT INTO " + DB_NAME + "1 (date, steps) SELECT date, steps FROM "+
-            DB_NAME);
-            db.execSQL("DROP TABLE " + DB_NAME);
-            db.execSQL("ALTER TABLE " + DB_NAME + "1 RENAME TO " + DB_NAME + "");
-        }
+
+
 
     }
 
@@ -99,12 +123,35 @@ public class Database extends SQLiteOpenHelper{
             getWritableDatabase().endTransaction();
         }
     }
-    public void open(){
-        sInstance.getWritableDatabase();
+
+    public long insertSteps(int steps){
+        ContentValues insSteps = new ContentValues();
+        insSteps.put(COLUMN_STEPS,steps);
+        long insertID = db.insert(DB_NAME,null,insSteps);
+
+        return insertID;
+    }
+
+
+
+
+
+
+    public void open() throws SQLException{
+        try {
+            Log.d(LOG_TAG, "Eine Referenz auf die Datenbank wird jetzt angefragt.");
+            db = dbHelper.getWritableDatabase();
+
+        }catch (SQLException e){
+            db = dbHelper.getReadableDatabase();
+        }
+
     }
 
     public void close(){
-        sInstance.close();
+
+        db.close();
+        Log.d(LOG_TAG, " Datenbank mit Hilfe des DbHelpers geschlossen.");
     }
 
 
@@ -243,6 +290,7 @@ public class Database extends SQLiteOpenHelper{
             re = Integer.MIN_VALUE;
         } else{ re = c.getInt(0);
         c.close();}
+        Log.d(LOG_TAG," Steps wurden gegetted");
         return re;
     }
 
@@ -282,6 +330,30 @@ public class Database extends SQLiteOpenHelper{
         return re == Integer.MIN_VALUE ? 0 : re;
     }
 
+
+
+    public class StepsDBOpenHelper extends  SQLiteOpenHelper{
+
+        private static final String DATABASE_CREATE = "create table "
+                + DB_NAME + " (" + COLUMN_ID
+                + " integer primary key autoincrement, " + COLUMN_STEPS
+                +" integer  steps, " + COLUMN_DATE + " text);";
+
+        public StepsDBOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+            super(context, name, factory, version);
+        }
+
+        @Override
+        public void onCreate(SQLiteDatabase db) {
+            db.execSQL(DATABASE_CREATE);
+
+        }
+
+        @Override
+        public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+        }
+    }
 
 
 

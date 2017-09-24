@@ -2,6 +2,7 @@ package dienichtskoenner.stepbystep;
 
 
 import android.app.AlarmManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -10,6 +11,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +29,10 @@ import java.util.TimeZone;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentTop extends Fragment implements SensorEventListener {
+    private static final String LOG_TAG =  FragmentTop.class.getSimpleName();
 
 
+   private FragmentTopDataSource dataSource;
 
 
     private Database db = new Database(getActivity());
@@ -57,7 +61,13 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
+
+
         return inflater.inflate(R.layout.fragment_top, container, false);
+
+
     }
 
 
@@ -135,9 +145,9 @@ public class FragmentTop extends Fragment implements SensorEventListener {
     public long getMidgnight(){
         Calendar c = new GregorianCalendar();
         c.setTimeZone(TimeZone.getTimeZone("Europe/Berlin"));
-        c.set(Calendar.HOUR_OF_DAY,3);
-        c.set(Calendar.MINUTE,21);
-        c.set(Calendar.SECOND,0);
+        c.set(Calendar.HOUR_OF_DAY,22);
+        c.set(Calendar.MINUTE,2);
+        c.set(Calendar.SECOND,30);
 
         return c.getTimeInMillis();
     }
@@ -153,7 +163,19 @@ public class FragmentTop extends Fragment implements SensorEventListener {
 
             if (System.currentTimeMillis() == getMidgnight()){
                 if (stepsDisplay != 0) {
-                    db.insertNewDay(UtilC.getToday(), stepsDisplay);
+                    try {
+                        ContentValues values = new ContentValues();
+                        values.put(Database.COLUMN_STEPS,stepsDisplay);
+                        Log.d(LOG_TAG, " Steps wurden eingefügt");
+                        values.put(Database.COLUMN_DATE, UtilC.getToday());
+                        Log.d(LOG_TAG, "Datum wurde eingefügt");
+                        dataSource.close();
+                        Log.d(LOG_TAG,"wurde geclosed");
+                    }catch (Exception e){
+
+                    }
+
+
                 }
                try {
                    db.saveCurrentSteps(stepsDisplay);
